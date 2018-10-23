@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+		
+		/*
+		* es5只有全局作用域和函数作用域，没有块级作用域
+		* es6 新增块级作用域，外层块级作用域无法读取内层块级作用域中let,const申明的变量
+		* 函数申明最好在全局变量中申明，理论上块级作用域中申明的函数类似let申明的函数，对作用域之外没有影响，但浏览器实现并没
+		* 有遵循改该规则，函数申明类似var变量申明，存在变量提升
+		*/
+		{
+			var a = 10;
+			let b = 20,
+				c = 30;
+			const d = 40,//const定义常量申明时必须赋值
+				constObj = {
+					a: 'yy'
+				};
+			console.log(a,',',b);//10,20
+			var a = 'aa';
+			//let b = 'bb';//SyntaxError，同一作用域内不能重复申明相同变量
+			//var b = 'bb';//SyntaxError，同一作用域内不能重复申明相同变量
+			//d = 'gg';//TypeError,const 定义基本类型常量不能修改
+			constObj.a = 'gg';
+			console.log(constObj);//gg，定义引用类型常量可以修改属性值，不能整个修改修改
+			//constObj = {};//TypeError
+			{
+				//b = 'some valeus';
+				//ReferenceError,同一作用域内变量必须先申明后使用，后面的let申明绑定了该作用域，不存在变量提升
+				//console.log(d);//ReferenceError,同let申明
+
+				var a = 100;
+				let b = 200;
+				const d = 'inner var';
+				console.log(a,',',b);//100,200
+				console.log(c);//内层作用域可以访问外层
+			}
+		}
+		console.log(a);//100
+		//console.log(b,d);//ReferenceError,let,const申明的变量只在代码块内有效
+
+		/*
+		* for循环的循环变量部分是外层作用域，循环体属内部作用域
+		*/
+		var arr = [];
+		for(let i = 0,str = 'loop'; i < 10;i++){
+
+			let str = 'inner loop';
+			//arr[i] = function(str = 'params'){//SyntaxError,函数参数申明和函数体同属一个作用域,参数申明默认使用let
+			arr[i] = function(){
+				let str = 'function body';
+				console.log(i);
+				console.log(str);
+			}
+
+		}
+
+		arr[4]();
+		//4
+		//function body
+
+		/*
+		* 全局var,function 申明的变量依旧属于window属性
+		* es6中全局let，const申明的变量则不再属于window属性
+		*/
+		var global_a = 'aa';
+		let global_b = 'bb';
+		const global_c = 'cc';
+		function foo(){}
+		console.log(window.global_a);//aa,
+		console.log(window.global_b);//undefined
+		console.log(window.global_c);//undefined
+		console.log(window.foo);//function foo
+
+	</script>
+	
+</body>
+</html>

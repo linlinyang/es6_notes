@@ -1,0 +1,19 @@
+{
+  "name": "learn_note",
+  "version": "1.0.0",
+  "description": "The es6 learn notes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linlinyang/es6_notes.git"
+  },
+  "author": "Zoro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/linlinyang/es6_notes/issues"
+  },
+  "homepage": "https://github.com/linlinyang/es6_notes#readme"
+}
